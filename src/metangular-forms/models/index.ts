@@ -1,2 +1,2 @@
-export * from './core-configs.ts';
+export * from './core-configs';
 export * from './field-configs';

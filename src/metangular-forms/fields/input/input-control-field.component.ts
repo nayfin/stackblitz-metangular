@@ -1,18 +1,27 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { FormFieldModule, InputModule } from '@fico/iris';
-import { InputFieldConfig } from '@fico/shared/models/form-builder';
+import { InputFieldConfig } from '../../models';
 import { ReactiveFormsModule } from '@angular/forms';
-import { AbstractControlField } from '../../abstracts';
+import { AbstractControlField } from '../abstract-control-field';
 
 /**
  * Input control rendered by Iris Form Builder
  */
 @Component({
-  selector: 'fico-ifb-input',
+  selector: 'metangular-input',
   standalone: true,
-  imports: [FormFieldModule, InputModule, ReactiveFormsModule],
+  imports: [ReactiveFormsModule],
   template: `
-  
+    <div
+      class="m-2"
+      [formGroup]="parentFormGroup()">
+      <label class="form-label">{{computedConfig().label}} </label>
+      <input
+        [type]="computedConfig().inputType"
+        [formControlName]="computedConfig().controlName"
+        [placeholder]="computedConfig().placeholder"
+        class="form-control"
+      />
+    </div>
   `,
   styles: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -20,6 +29,5 @@ import { AbstractControlField } from '../../abstracts';
 export class InputComponent extends AbstractControlField<InputFieldConfig, string> {
   override defaultConfig: Partial<InputFieldConfig> = {
     inputType: 'text',
-    required: false,
   };
 }

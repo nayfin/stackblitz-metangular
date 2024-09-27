@@ -10,35 +10,31 @@ import {
 import { FormGroup } from '@angular/forms';
 
 import {
-  AllFieldConfigs,
+  ControlFieldConfigs,
   ControlValue,
-  FieldType,
 } from '../models';
 
-import type {
-  InputComponent,
-} from './input/input-control-field.component';
+import type { InputComponent } from './input/input-control-field.component';
+import type { SelectComponent } from './select/select-control-field.component';
 
 export const FIELD_COMPONENTS = {
   input: () =>
     import('./input/input-control-field.component').then(
       ({ InputComponent }) => InputComponent
     ),
-  // select: () => import('./select/select-control-field.component').then(({ SelectComponent }) => SelectComponent),
-  // subGroup: () =>
-  //   import('./sub-group/sub-group-control-field.component').then(({ IfbSubGroupComponent }) => IfbSubGroupComponent),
+  select: () => import('./select/select-control-field.component').then(({ SelectComponent }) => SelectComponent),
 };
 
 
 export type ComponentKeys = keyof typeof FIELD_COMPONENTS;
 
-export type FieldComponentType = InputComponent
+export type FieldComponentType = InputComponent | SelectComponent
 
 /**
  * Renders a form field from a field configuration
  */
 @Directive({
-  selector: '[maFieldRenderer]',
+  selector: '[fieldRenderer]',
   standalone: true,
 })
 export class FieldRendererDirective implements OnInit {
@@ -46,7 +42,7 @@ export class FieldRendererDirective implements OnInit {
   /**
    * The config for the form field to render
    */
-  @Input({ required: true }) config!: AllFieldConfigs;
+  @Input({ required: true }) config!: ControlFieldConfigs;
   /**
    * The form group to add the control to
    */
@@ -61,7 +57,7 @@ export class FieldRendererDirective implements OnInit {
      * create component and passes the field's config and the form group to the inputs
      */
     const component = await FIELD_COMPONENTS[
-      this.config.fieldType as FieldType
+      this.config.fieldType
     ]();
     this.componentRef =
       this.container.createComponent<FieldComponentType>(component);
