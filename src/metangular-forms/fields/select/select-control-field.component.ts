@@ -1,8 +1,6 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { AsyncPipe } from '@angular/common';
+import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
 
-import { ReactiveFormsModule } from '@angular/forms';
-import { AbstractControlField } from '../abstract-control-field';
+import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { SelectFieldConfig } from '../../models';
 
 export const defaultSelectFieldConfig: Partial<SelectFieldConfig> = {};
@@ -11,11 +9,9 @@ export const defaultSelectFieldConfig: Partial<SelectFieldConfig> = {};
  * Select control rendered by Iris Form Builder
  */
 @Component({
-  selector: 'fico-ifb-select',
+  selector: 'metangular-select',
   standalone: true,
-  imports: [
-    ReactiveFormsModule,
-  ],
+  imports: [ReactiveFormsModule],
   template: `
     <div [formGroup]="parentFormGroup()" class="m-2"> 
     <label class="form-label">{{computedConfig().label}}</label>
@@ -35,9 +31,22 @@ export const defaultSelectFieldConfig: Partial<SelectFieldConfig> = {};
   styles: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SelectComponent extends AbstractControlField<
-  SelectFieldConfig,
-  unknown[]
-> {
-  override defaultConfig: Partial<SelectFieldConfig> = defaultSelectFieldConfig;
+export class SelectComponent {
+    /**
+     * Configuration passed by consumer
+     */
+    config = input.required<Partial<SelectFieldConfig>>();
+    /**
+     * The default properties that a user shouldn't have to pass
+     */
+    defaultConfig!: Partial<SelectFieldConfig>;
+    /**
+     * Configuration used by component with default config and passed configuration;
+     */
+    computedConfig = computed<Required<SelectFieldConfig>>(
+      () => ({ ...this.defaultConfig, ...this.config()} as Required<SelectFieldConfig>)
+    );
+    parentFormGroup = input.required<FormGroup>();
+
+    value = input<unknown[] | null>(null);
 }

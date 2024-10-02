@@ -1,7 +1,6 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
 import { InputFieldConfig } from '../../models';
-import { ReactiveFormsModule } from '@angular/forms';
-import { AbstractControlField } from '../abstract-control-field';
+import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 /**
  * Input control rendered by Iris Form Builder
@@ -26,8 +25,23 @@ import { AbstractControlField } from '../abstract-control-field';
   styles: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class InputComponent extends AbstractControlField<InputFieldConfig, string> {
-  override defaultConfig: Partial<InputFieldConfig> = {
+export class InputComponent {
+  /**
+   * Configuration passed by consumer
+   */
+  config = input.required<Partial<InputFieldConfig>>();
+  /**
+   * The default properties that a user shouldn't have to pass
+   */
+  defaultConfig: Partial<InputFieldConfig> = {
     inputType: 'text',
   };
+  /**
+   * Configuration used by component with default config and passed configuration;
+   */
+  computedConfig = computed<Required<InputFieldConfig>>(
+    () => ({ ...this.defaultConfig, ...this.config()} as Required<InputFieldConfig>)
+  );
+  parentFormGroup = input.required<FormGroup>();
+  value = input<string | null>(null);
 }
