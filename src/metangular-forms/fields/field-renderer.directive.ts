@@ -58,7 +58,7 @@ export class FieldRendererDirective implements OnInit {
     /**
      * create component and passes the field's config and the form group to the inputs
      */
-    const component = await FIELD_COMPONENTS[this.config.fieldType];
+    const component = FIELD_COMPONENTS[this.config.fieldType];
 
     this.componentRef =
       this.container.createComponent<FieldComponentType>(component);

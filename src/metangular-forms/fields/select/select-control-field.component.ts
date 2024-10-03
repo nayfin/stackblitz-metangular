@@ -32,21 +32,19 @@ export const defaultSelectFieldConfig: Partial<SelectFieldConfig> = {};
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SelectComponent {
-    /**
-     * Configuration passed by consumer
-     */
-    config = input.required<Partial<SelectFieldConfig>>();
-    /**
-     * The default properties that a user shouldn't have to pass
-     */
-    defaultConfig!: Partial<SelectFieldConfig>;
-    /**
-     * Configuration used by component with default config and passed configuration;
-     */
-    computedConfig = computed<Required<SelectFieldConfig>>(
-      () => ({ ...this.defaultConfig, ...this.config()} as Required<SelectFieldConfig>)
-    );
-    parentFormGroup = input.required<FormGroup>();
-
-    value = input<unknown[] | null>(null);
+  /**
+   * Configuration passed by consumer
+   */
+  config = input.required<Partial<SelectFieldConfig>>();
+  /**
+   * The default properties that a user shouldn't have to pass
+   */
+  defaultConfig!: Partial<SelectFieldConfig>;
+  /**
+   * Configuration used by component with default config and passed configuration;
+   */
+  computedConfig = computed<Required<SelectFieldConfig>>(
+    () => ({ ...this.defaultConfig, ...this.config()} as Required<SelectFieldConfig>)
+  );
+  parentFormGroup = input.required<FormGroup>();
 }
