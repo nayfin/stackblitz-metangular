@@ -18,7 +18,7 @@ export const defaultSelectFieldConfig: Partial<SelectFieldConfig> = {};
     <select class="form-control" 
       [formControlName]="computedConfig().controlName">
       @if(computedConfig().placeholder; as placeholder) {
-        <option selected [value]="null" >{{placeholder}}</option>
+        <option selected [value]="null" disabled>{{placeholder}}</option>
       }
       @for (option of computedConfig().options; track $index) {
         <option [value]="option.value">

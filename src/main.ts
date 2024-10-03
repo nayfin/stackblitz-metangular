@@ -3,6 +3,7 @@ import { bootstrapApplication } from '@angular/platform-browser';
 import { MetangularFormComponent } from './metangular-forms/metangular-form';
 import { BaseFormGroupConfig } from './metangular-forms/models';
 import { JsonPipe } from '@angular/common';
+import { Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
@@ -12,10 +13,12 @@ import { JsonPipe } from '@angular/common';
     <metangular-form
      [config]="formConfig" 
      (formSubmit)="handleFormSubmit($event)"
+     (statusChanges)="handleStatusChanges($event)"
     />
 
     <pre>
       Submitted Form Value: {{ latestFormValue() | json }}
+      Status: {{currentStatus() }}
     </pre>
   `,
 })
@@ -28,6 +31,7 @@ export class App {
         controlName: 'fullName', // Bind the element's value to 'fullName' property of the formGroup
         label: 'Full Name', // the label to display in the UI
         placeholder: 'Jane Doe', // Placeholder text before a user starts typing
+        validators: [Validators.required]
       },
       {
         fieldType: 'select', // Render a select element
@@ -53,7 +57,11 @@ export class App {
   };
 
   latestFormValue = signal<unknown>(null);
+  currentStatus = signal<string>('')
 
+  /**
+   * Used to demonstrating populating with initial values
+   */
   initialValue = {
     firstName: 'Rick',
     lastName: 'Moranis',
@@ -63,6 +71,10 @@ export class App {
 
   handleFormSubmit(value: unknown) {
     this.latestFormValue.set(value)
+  }
+
+  handleStatusChanges(status: string) {
+    this.currentStatus.set(status);
   }
 }
 
@@ -83,3 +95,4 @@ bootstrapApplication(App);
 //   label: 'Last Name', // the label to display in the UI
 //   placeholder: 'Doe', // Placeholder text before a user starts typing
 // },
+// validators: [Validators.required]
