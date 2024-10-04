@@ -8,9 +8,8 @@ import {
 } from '@angular/core';
 import { ReactiveFormsModule, FormGroup, FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { NgClass } from '@angular/common';
 import { FieldRendererDirective } from './fields';
-import { BaseFormGroupConfig, ControlFieldConfigs, ControlGroupValue, ControlValue } from './models';
+import { BaseFormGroupConfig, ControlFieldConfigs, ControlGroupValue } from './models';
 
 @Component({
   selector: 'metangular-form',
