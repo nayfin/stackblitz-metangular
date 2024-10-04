@@ -81,9 +81,24 @@ const formConfig: BaseFormGroupConfig = {
 };
 ```
 
+## Code Walkthrough
+
+### Form Component
+
+- Recieves form configuration and optional intial values
+
+- Initializes Angular FormGroup and adds a FormControl for each field in the form configuration
+- Loops over each field in the `fields` array, passing the field's configuration and the FormGroup to the FieldRenderer Directive 
 
 
-# Next Steps
+[embed](https://github.com/nayfin/stackblitz-metangular/blob/14cabe00a2cc9a4663c2285272b8995bbc83268d/src/metangular-forms/metangular-form.ts#L70-L111)
+
+### Field Renderer Directive
+- Renders the field component that corresponds to the 
+
+
+
+## Next Steps
 - Handling validation messages
 	- Add [ngneat-error-tailor](https://github.com/ngneat/error-tailor) or follow [this guide](https://netbasal.com/make-your-angular-forms-error-messages-magically-appear-1e32350b7fa5) to create a custom implementation
 - Begin abstracting shared logic into base class
