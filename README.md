@@ -55,6 +55,7 @@ const formConfig: BaseFormGroupConfig = {
       controlName: 'fullName', // Bind the element's value to 'fullName' property of the formGroup
       label: 'Full Name', // the label to display in the UI
       placeholder: 'Jane Doe', // Placeholder text before a user starts typing
+      validators: [Validators.required]
     },
     {
       fieldType: 'select', // Render a select element

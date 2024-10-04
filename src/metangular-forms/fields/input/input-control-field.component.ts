@@ -43,5 +43,4 @@ export class InputComponent {
     () => ({ ...this.defaultConfig, ...this.config()} as Required<InputFieldConfig>)
   );
   parentFormGroup = input.required<FormGroup>();
-  value = input<string | null>(null);
 }

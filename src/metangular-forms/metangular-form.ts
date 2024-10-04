@@ -2,8 +2,6 @@ import {
   Component,
   Output,
   EventEmitter,
-  ViewChild,
-  ElementRef,
   ChangeDetectionStrategy,
   input,
   effect
@@ -22,7 +20,6 @@ import { BaseFormGroupConfig, ControlFieldConfigs, ControlGroupValue, ControlVal
       [formGroup]="form"
       (ngSubmit)="handleSubmit()"
       #ngFormElement="ngForm">
-      @if(config().fields.length > 0) {
         @for (field of config().fields; track $index) {
           <ng-container fieldRenderer [config]="field" [group]="form">
           </ng-container>
@@ -30,11 +27,6 @@ import { BaseFormGroupConfig, ControlFieldConfigs, ControlGroupValue, ControlVal
         <div class="d-flex m-2 justify-content-end">
           <button class="btn btn-primary" type="submit">SUBMIT</button>
         </div>
-      } @else {
-        <div class="d-flex w-100 p-2">
-          <img class="w-100" src="https://media.tenor.com/1wa_xs8OS1IAAAAM/hungry-seamore.gif">
-        </div>
-      }
     </form> 
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -116,6 +108,4 @@ export function buildFormGroupFromConfig(
       group.addControl(controlName, control);
     }
   });
-  
-  return group;
 }
