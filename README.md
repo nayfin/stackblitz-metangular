@@ -118,7 +118,10 @@ const formConfig: BaseFormGroupConfig = {
 
 # Recources
 
-- Learned about this dynamic forms from an article from Netanel Basal,
-- [Automatic Form Validation ]
+- I learned about how to implement dynamic forms from an article from Netanel Basal but it seems like it was removed from Medium
+- Automatic Form Validation
+  - [ngneat error-tailer](https://github.com/ngneat/error-tailor)
+  - [guide](https://netbasal.com/) from Netanel Basal
+- a similar library with more features [crispr forms](https://github.com/nayfin/tft/tree/main/libs/crispr-forms)
 
 
