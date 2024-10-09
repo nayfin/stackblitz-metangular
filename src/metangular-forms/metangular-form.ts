@@ -107,4 +107,5 @@ export function buildFormGroupFromConfig(
       group.addControl(controlName, control);
     }
   });
+  return group;
 }

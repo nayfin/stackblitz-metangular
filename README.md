@@ -8,6 +8,7 @@
 </style>
 
 # MetAngular
+Demonstration of how to use metaprogramming to build a form that can be rendered from a configuration at runtime. 
 
 ## Getting Started
 
@@ -29,19 +30,25 @@
 </div>
 
 ## Metaprogramming
-
-
 >  It means that a program can be designed to read, generate, analyse, or transform other programs, and even modify itself, while running. 
 >
 > -- <cite>Wikipedia (Metaprogramming)</cite>
 
-Useful for:
-- Highly dynamic UI components
-- User configurable UI systems
-- Codifying highly reused structures
-- Enforcing guardrails
+<img alt="metaprogramming image" src="./src//assets/metaprogramming.webp" width="300"/>
 
-Here well demonstrate how to use metaprogramming to build a form that can be rendered from a configuration at runtime. 
+
+Pros:
+- Enables user configurable UI systems
+- Enforces consistent patterns
+- Fast downstream development once systems are built
+- Very DRY 
+- Abstracts away difficult implementation details
+
+Cons:
+- Building and maintaining the system is more difficult than traditional development
+- API changes can require changes to stored configs (require database migrations)
+
+
 
 ## API First
 Start by designing the API you'd like to use if you were consuming the component. For a form that asks a user for their full name and favorite color we'd need two form fields and their configuration might look something like this.
@@ -85,7 +92,7 @@ const formConfig: BaseFormGroupConfig = {
 
 ### Form Component
 
-- Recieves form configuration and optional intial values
+- Receives form configuration and optional intial values
 
 - Initializes Angular FormGroup and adds a FormControl for each field in the form configuration
 - Loops over each field in the `fields` array, passing the field's configuration and the FormGroup to the FieldRenderer Directive 
@@ -94,7 +101,8 @@ const formConfig: BaseFormGroupConfig = {
 [embed](https://github.com/nayfin/stackblitz-metangular/blob/14cabe00a2cc9a4663c2285272b8995bbc83268d/src/metangular-forms/metangular-form.ts#L70-L111)
 
 ### Field Renderer Directive
-- Renders the field component that corresponds to the 
+- Renders the field component that corresponds to that configuration's `fieldType` property (e.g. renders a select field when the `fieldType` is `select`)
+- set the `config` and `parentFormGroup` properties on the rendered component
 
 
 
