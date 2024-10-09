@@ -13,15 +13,12 @@ import {
 } from '../models';
 import { FieldComponentType } from '../models/field-types';
 
-import { SelectComponent } from './select/select-control-field.component';
-import { InputComponent } from './input/input-control-field.component';
-
 /**
  * Record of the form field components to render
  */
 export const FIELD_COMPONENTS = {
-  input: InputComponent,
-  select: SelectComponent,
+  input: () => import('./input/input-control-field.component').then(({ InputComponent }) => InputComponent),
+  select: () => import('./select/select-control-field.component').then(({ SelectComponent }) => SelectComponent),
 };
 
 
@@ -58,7 +55,7 @@ export class FieldRendererDirective implements OnInit {
     /**
      * create component and passes the field's config and the form group to the inputs
      */
-    const component = await FIELD_COMPONENTS[this.config.fieldType];
+    const component = await FIELD_COMPONENTS[this.config.fieldType]();
 
     this.componentRef =
       this.container.createComponent<FieldComponentType>(component);
@@ -72,7 +69,3 @@ export class FieldRendererDirective implements OnInit {
 // /**
 //  * Record of the form field components to render
 //  */
-// export const FIELD_COMPONENTS = {
-//   input: () => import('./input/input-control-field.component').then(({ InputComponent }) => InputComponent),
-//   select: () => import('./select/select-control-field.component').then(({ SelectComponent }) => SelectComponent),
-// };
